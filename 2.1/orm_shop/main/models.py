@@ -46,8 +46,23 @@ DRIVE_UNIT_CHOICES = (
 
 
 class Car(models.Model):
-    pass  # реализуйте модель
+    #id = models.CharField(max_length=50, primary_key=True)
+    model = models.CharField(max_length=100)
+    year = models.IntegerField()
+    color = models.CharField(max_length=20)
+    mileage = models.IntegerField()
+    volume = models.DecimalField(max_digits=2, decimal_places=1)
+    body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=20)
+    drive_unit = models.CharField(choices=DRIVE_UNIT_CHOICES, max_length=20)
+    gearbox = models.CharField(choices=GEARBOX_CHOICES, max_length=20)
+    fuel_type = models.CharField(choices=FUEL_TYPE_CHOICES, max_length=20)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return f'{self.model}\nЦена: {self.price}\n{self.volume} / {self.fuel_type} / {self.year} / {self.gearbox}'
 
 
 class Sale(models.Model):
+
     pass  # реализуйте модель
