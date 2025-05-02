@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Client(models.Model):
+    #id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50)
@@ -46,7 +47,7 @@ DRIVE_UNIT_CHOICES = (
 
 
 class Car(models.Model):
-    #id = models.CharField(max_length=50, primary_key=True)
+    id = models.CharField(max_length=50, primary_key=True)
     model = models.CharField(max_length=100)
     year = models.IntegerField()
     color = models.CharField(max_length=20)
@@ -60,9 +61,13 @@ class Car(models.Model):
     image = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return f'{self.model}\nЦена: {self.price}\n{self.volume} / {self.fuel_type} / {self.year} / {self.gearbox}'
+        return f'{self.model} | {self.fuel_type} | {self.gearbox}'
 
 
 class Sale(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    pass  # реализуйте модель
+    def __str__(self):
+        return f'{self.client} | {self.car.model} | {self.created_at}'
